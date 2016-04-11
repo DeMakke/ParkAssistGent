@@ -20,7 +20,7 @@
             <TextBlock Text="PARK ASSIST GENT" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
         </StackPanel>
         <StackPanel>
-            <Button Content="Zoek nu dadelijk parking" x:Name="Zoek" Margin="25,75,0,15"/>
+            <Button Content="Zoek parking" x:Name="Zoek" Margin="25,75,0,15"/>
             <Button Content="Bewaar parkeerplaats" x:Name="Bewaar" Margin="25"/>
         </StackPanel>
     </Grid>
