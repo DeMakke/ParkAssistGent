@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace ParkAssistGent
@@ -43,6 +44,11 @@ namespace ParkAssistGent
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+        }
+
+        private void btnGoToSave_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SaveParkingspace));
         }
     }
 }

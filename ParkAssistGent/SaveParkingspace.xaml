@@ -1,14 +1,21 @@
 ﻿<Page
-    x:Class="ParkAssistGent.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ParkAssistGent"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    x:Class="ParkAssistGent.SaveParkingspace"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,10 +25,18 @@
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="PARK ASSIST GENT" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            
         </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+
+            <Maps:MapControl x:Name="mapWithMyLocation"/>
+
+        </Grid>
+
         <StackPanel>
-            <Button Content="Find parking in Ghent" x:Name="btnFind" Margin="25,75,0,15"/>
-            <Button Content="Save parking space" x:Name="btnGoToSave" Margin="25" Click="btnGoToSave_Click" />
+            <Button Content="Save parkingspace" x:Name="btnSaveParkingspace" Margin="110,50,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
