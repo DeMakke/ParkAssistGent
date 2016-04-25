@@ -36,7 +36,8 @@
         </Grid>
 
         <StackPanel>
-            <Button Content="Save parkingspace" x:Name="btnSaveParkingspace" Margin="110,50,0,0"/>
+            <Button Content="Save your parkingspace" x:Name="btnSaveParkingspace" Click="btnSaveParkingspace_Click" Margin="90,50,0,0"/>
+            <Button Content="Find your parkingspace" x:Name="btnFindParkingspace" Click="btnFindParkingspace_Click" Margin="90,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -21,7 +21,7 @@
         </StackPanel>
         <StackPanel>
             <Button Content="Find parking in Ghent" x:Name="btnFind" Margin="25,75,0,15"/>
-            <Button Content="Save parking space" x:Name="btnGoToSave" Margin="25" Click="btnGoToSave_Click" />
+            <Button Content="Save or find your parkingspace" x:Name="btnGoToSave" Margin="25" Click="btnGoToSave_Click" />
         </StackPanel>
     </Grid>
 </Page>

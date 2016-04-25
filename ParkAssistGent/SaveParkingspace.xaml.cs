@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.Services.Maps;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,6 +35,7 @@ namespace ParkAssistGent
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private Geoposition parkingspace;
 
         public SaveParkingspace()
         {
@@ -54,26 +58,18 @@ namespace ParkAssistGent
 
         private async void ShowMyLocationOnTheMap()
         {
-            Geolocator geolocator = new Geolocator();
-            Geoposition geoposition = null;
-            try
-            {
-                geoposition = await geolocator.GetGeopositionAsync();
-            }
-            catch (Exception ex)
-            {
-                // Handle errors like unauthorized access to location
-                // services or no Internet access.
-            }
+            Geoposition geoposition = await getLocation();
+
+
             mapWithMyLocation.Center = geoposition.Coordinate.Point;
             MapIcon mapIcon = new MapIcon();
-            mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
-              new Uri("ms-appx:///Assets/pin.png"));
-            //mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
+            //mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
+              //new Uri("ms-appx:///Assets/pin.png"));
+            mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
             mapIcon.Location = geoposition.Coordinate.Point;
             mapIcon.Title = "You are here";
             mapWithMyLocation.MapElements.Add(mapIcon);
-            mapWithMyLocation.ZoomLevel = 13;
+            mapWithMyLocation.ZoomLevel = 15;
 
             //Windows.UI.Xaml.Shapes.Ellipse fence = new Windows.UI.Xaml.Shapes.Ellipse();
             //fence.Width = 30;
@@ -148,5 +144,128 @@ namespace ParkAssistGent
         }
 
         #endregion
+
+        private async void btnSaveParkingspace_Click(object sender, RoutedEventArgs e)
+        {
+            Geoposition geoposition = await getLocation();
+
+
+            mapWithMyLocation.Center = geoposition.Coordinate.Point;
+            MapIcon mapIcon = new MapIcon();
+            //mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
+            //new Uri("ms-appx:///Assets/pin.png"));
+            mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
+            mapIcon.Location = geoposition.Coordinate.Point;
+            mapIcon.Title = "Your parkingspace";
+            mapWithMyLocation.MapElements.Add(mapIcon);
+            mapWithMyLocation.ZoomLevel = 18;
+            parkingspace = geoposition;
+
+        }
+
+        private async Task<Geoposition> getLocation()
+        {
+            Geolocator geolocator = new Geolocator();
+            Geoposition geoposition = null;
+            try
+            {
+                geoposition = await geolocator.GetGeopositionAsync();
+            }
+            catch (Exception ex)
+            {
+                // Handle errors like unauthorized access to location
+                // services or no Internet access.
+            }
+            return geoposition;
+        }
+
+
+
+        private async void btnFindParkingspace_Click(object sender, RoutedEventArgs e)
+        {
+            Geoposition startPosition = await getLocation();
+            if (parkingspace != null)
+            {
+                Geoposition endPosition = parkingspace;
+            }
+            else
+            {
+                var messageDialog = new MessageDialog("Geen parkingplaats bewaard.");
+                await messageDialog.ShowAsync();
+            }
+            
+
+            BasicGeoposition startLocation = new BasicGeoposition();
+            startLocation.Latitude = startPosition.Coordinate.Point.Position.Latitude;
+            startLocation.Longitude = startPosition.Coordinate.Point.Position.Longitude;
+            Geopoint startPoint = new Geopoint(startLocation);
+
+            BasicGeoposition endLocation = new BasicGeoposition();
+            endLocation.Latitude = parkingspace.Coordinate.Point.Position.Latitude;
+            endLocation.Longitude = parkingspace.Coordinate.Point.Position.Longitude;
+            Geopoint endPoint = new Geopoint(endLocation);
+
+
+            mapWithMyLocation.Center = startPosition.Coordinate.Point;
+            MapIcon mapIcon = new MapIcon();
+            //mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
+            //new Uri("ms-appx:///Assets/pin.png"));
+            mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
+            mapIcon.Location = startPosition.Coordinate.Point;
+            mapIcon.Title = "You are here";
+            mapWithMyLocation.MapElements.Add(mapIcon);
+            mapWithMyLocation.ZoomLevel = 12;
+
+            MapRouteFinderResult routeResult = await MapRouteFinder.GetWalkingRouteAsync(startPoint, endPoint);
+
+
+            if (routeResult.Status == MapRouteFinderStatus.Success)
+            {
+                // Use the route to initialize a MapRouteView.
+                MapRouteView viewOfRoute = new MapRouteView(routeResult.Route);
+                viewOfRoute.RouteColor = Colors.Blue;
+                viewOfRoute.OutlineColor = Colors.Blue;
+                // Add the new MapRouteView to the Routes collection
+                // of the MapControl.
+                mapWithMyLocation.Routes.Add(viewOfRoute);
+                // Fit the MapControl to the route.
+                await mapWithMyLocation.TrySetViewBoundsAsync(
+                  routeResult.Route.BoundingBox,
+                  null,
+                  Windows.UI.Xaml.Controls.Maps.MapAnimationKind.Bow);
+            }
+
+            //tbTurnByTurn.Inlines.Add(new Run()
+            //{
+            //    Text = "Total estimated time (minutes) = "
+            //    + routeResult.Route.EstimatedDuration.TotalMinutes.ToString("F1")
+            //});
+            //tbTurnByTurn.Inlines.Add(new LineBreak());
+            //tbTurnByTurn.Inlines.Add(new Run()
+            //{
+            //    Text = "Total length (kilometers) = "
+            //    + (routeResult.Route.LengthInMeters / 1000).ToString("F1")
+            //});
+            //tbTurnByTurn.Inlines.Add(new LineBreak());
+            //// Display the directions.
+            //tbTurnByTurn.Inlines.Add(new Run()
+            //{
+            //    Text = "DIRECTIONS"
+            //});
+            //tbTurnByTurn.Inlines.Add(new LineBreak());
+            //// Loop through the legs and maneuvers.
+            //int legCount = 0;
+            //foreach (MapRouteLeg leg in routeResult.Route.Legs)
+            //{
+            //    foreach (MapRouteManeuver maneuver in leg.Maneuvers)
+            //    {
+            //        tbTurnByTurn.Inlines.Add(new Run()
+            //        {
+            //            Text = maneuver.InstructionText
+            //        });
+            //        tbTurnByTurn.Inlines.Add(new LineBreak());
+            //    }
+            //}
+        }
     }
 }
