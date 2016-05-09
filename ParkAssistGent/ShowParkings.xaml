@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="ParkAssistGent.BasicPage1"
+    x:Class="ParkAssistGent.ShowParkings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ParkAssistGent"
@@ -29,7 +29,8 @@
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-
+           <!-- xdocument zie c# LINQ of deserialize? -->
+            <!-- http://datatank.stad.gent/4/mobiliteit/parkinglocaties.xml -->
         </Grid>
     </Grid>
 </Page>

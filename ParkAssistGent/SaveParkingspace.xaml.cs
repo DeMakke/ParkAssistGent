@@ -68,8 +68,8 @@ namespace ParkAssistGent
             mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
             mapIcon.Location = geoposition.Coordinate.Point;
             mapIcon.Title = "You are here";
-            //mapWithMyLocation.MapElements.Add(mapIcon);
-            mapWithMyLocation.ZoomLevel = 12;
+            mapWithMyLocation.MapElements.Add(mapIcon);
+            mapWithMyLocation.ZoomLevel = 14;
 
             //Windows.UI.Xaml.Shapes.Ellipse fence = new Windows.UI.Xaml.Shapes.Ellipse();
             //fence.Width = 30;
@@ -157,6 +157,7 @@ namespace ParkAssistGent
 
         private async void btnSaveParkingspace_Click(object sender, RoutedEventArgs e)
         {
+            mapWithMyLocation.MapElements.Clear();
             Geoposition geoposition = await getLocation();
 
 
@@ -167,8 +168,9 @@ namespace ParkAssistGent
             mapIconPark.NormalizedAnchorPoint = new Point(0.25, 0.9);
             mapIconPark.Location = geoposition.Coordinate.Point;
             mapIconPark.Title = "Your parkingspace";
+            //mapWithMyLocation.MapElements.Clear;
             mapWithMyLocation.MapElements.Add(mapIconPark);
-            mapWithMyLocation.ZoomLevel = 12;
+            mapWithMyLocation.ZoomLevel = 16;
             parkingspace = geoposition;
 
         }
@@ -193,10 +195,16 @@ namespace ParkAssistGent
 
         private async void btnFindParkingspace_Click(object sender, RoutedEventArgs e)
         {
+            mapWithMyLocation.MapElements.Clear();
             Geoposition startPosition = await getLocation();
             if (parkingspace != null)
             {
                 Geoposition endPosition = parkingspace;
+                MapIcon mapIconPark2 = new MapIcon();
+                mapIconPark2.NormalizedAnchorPoint = new Point(0.25, 0.9);
+                mapIconPark2.Location = endPosition.Coordinate.Point;
+                mapIconPark2.Title = "Parkingspace";
+                mapWithMyLocation.MapElements.Add(mapIconPark2);
             }
             else
             {
@@ -236,7 +244,7 @@ namespace ParkAssistGent
             //mapWithMyLocation.MapElements.Add(mapIconEnd);
             mapWithMyLocation.ZoomLevel = 12;
 
-
+           
 
 
 
@@ -296,6 +304,28 @@ namespace ParkAssistGent
             //        tbTurnByTurn.Inlines.Add(new LineBreak());
             //    }
             //}
+        }
+
+        private void btnZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (mapWithMyLocation.ZoomLevel < 20)
+            {
+                if (mapWithMyLocation.ZoomLevel > 19)
+                    mapWithMyLocation.ZoomLevel = 20;
+                else
+                    mapWithMyLocation.ZoomLevel++;
+            }
+        }
+
+        private void btnZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (mapWithMyLocation.ZoomLevel > 1)
+            {
+                if (mapWithMyLocation.ZoomLevel < 2)
+                    mapWithMyLocation.ZoomLevel = 1;
+                else
+                    mapWithMyLocation.ZoomLevel--;
+            }
         }
     }
 }

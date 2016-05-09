@@ -32,6 +32,27 @@
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
 
             <Maps:MapControl x:Name="mapWithMyLocation"/>
+            <StackPanel HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal"
+                Margin="15">
+                <Button Content="+" 
+                    x:Name="btnZoomIn"
+                    Margin="5" 
+                    MinWidth="60" 
+                    MinHeight="60"
+                    Click="btnZoomIn_Click" 
+                    Background="LightBlue"
+                />
+                <Button Content="-" 
+                    Margin="5" 
+                    MinWidth="60" 
+                    MinHeight="60"                
+                    x:Name="btnZoomOut" 
+                    Click="btnZoomOut_Click"
+                    Background="LightBlue"
+                />
+            </StackPanel>
 
         </Grid>
 

@@ -20,7 +20,7 @@
             <TextBlock Text="PARK ASSIST GENT" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
         </StackPanel>
         <StackPanel>
-            <Button Content="Find parking in Ghent" x:Name="btnFind" Margin="25,75,0,15"/>
+            <Button Content="Find parking in Ghent" x:Name="btnFindParkingGhent" Margin="25,75,0,15" Click="btnFindParkingGhent_Click"/>
             <Button Content="Save or find your parkingspace" x:Name="btnGoToSave" Margin="25" Click="btnGoToSave_Click" />
         </StackPanel>
     </Grid>
