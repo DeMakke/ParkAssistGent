@@ -31,7 +31,7 @@
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
 
-            <Maps:MapControl x:Name="mapWithMyLocation"/>
+            <Maps:MapControl x:Name="mapWithMyLocation" MapServiceToken = "PP-GfLf36HgHjM8ZVPl2GA"/>
             <StackPanel HorizontalAlignment="Center" 
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal"

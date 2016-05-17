@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
   <Identity Name="a2d488e6-dcbc-4dd8-9b55-31e59517b85f" Publisher="CN=r0421930" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="a2d488e6-dcbc-4dd8-9b55-31e59517b85f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <mp:PhoneIdentity PhoneProductId="a2b5d6fe-373e-47b4-b19f-2566db0a9f8f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ParkAssistGent</DisplayName>
     <PublisherDisplayName>r0421930</PublisherDisplayName>

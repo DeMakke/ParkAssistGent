@@ -85,6 +85,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parkings.cs" />
     <Compile Include="SaveParkingspace.xaml.cs">
       <DependentUpon>SaveParkingspace.xaml</DependentUpon>
     </Compile>

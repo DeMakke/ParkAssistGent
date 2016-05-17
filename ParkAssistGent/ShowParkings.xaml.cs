@@ -3,10 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -105,6 +110,26 @@ namespace ParkAssistGent
         {
             this.navigationHelper.OnNavigatedFrom(e);
         }
+
+        public async void LoadXML()
+        {
+            HttpClient client = new HttpClient();
+            var httpResponseMessage = await client.GetAsync(new Uri("http://datatank.stad.gent/4/mobiliteit/parkinglocaties.xml"));
+            if (httpResponseMessage.StatusCode == HttpStatusCode.OK)
+            {
+                var xmlStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+                XDocument xml = XDocument.Load(xmlStream);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml.ToString());
+
+                XmlElement elem = xmlDoc.CreateElement("parkings");
+
+            }
+
+            MessageDialog msg = new MessageDialog(xml);
+        }
+
+        
 
         #endregion
     }

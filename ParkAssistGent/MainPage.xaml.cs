@@ -59,3 +59,7 @@ namespace ParkAssistGent
         }
     }
 }
+
+
+// VERSLAG: werking programma (verschillende schermen, wat ge waar doet), hoe code opgebouwd?
+// PRESENTATIE: PPT hoe app opgebouwd(code in de presentatie) + demo

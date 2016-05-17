@@ -195,6 +195,8 @@ namespace ParkAssistGent
 
         private async void btnFindParkingspace_Click(object sender, RoutedEventArgs e)
         {
+            MapService.ServiceToken = "PP-GfLf36HgHjM8ZVPl2GA";
+
             mapWithMyLocation.MapElements.Clear();
             Geoposition startPosition = await getLocation();
             if (parkingspace != null)
@@ -211,100 +213,55 @@ namespace ParkAssistGent
                 var messageDialog = new MessageDialog("No parkingspace saved.");
                 await messageDialog.ShowAsync();
             }
-            
 
-            //BasicGeoposition startLocation = new BasicGeoposition();
-            //startLocation.Latitude = startPosition.Coordinate.Point.Position.Latitude;
-            //startLocation.Longitude = startPosition.Coordinate.Point.Position.Longitude;
-            //Geopoint startPoint = new Geopoint(startLocation);
 
-            //BasicGeoposition endLocation = new BasicGeoposition();
-            //endLocation.Latitude = parkingspace.Coordinate.Point.Position.Latitude;
-            //endLocation.Longitude = parkingspace.Coordinate.Point.Position.Longitude;
-            //Geopoint endPoint = new Geopoint(endLocation);
+            BasicGeoposition startLocation = new BasicGeoposition();
+            startLocation.Latitude = startPosition.Coordinate.Point.Position.Latitude;
+            startLocation.Longitude = startPosition.Coordinate.Point.Position.Longitude;
+            Geopoint startPoint = new Geopoint(startLocation);
+
+            BasicGeoposition endLocation = new BasicGeoposition();
+            endLocation.Latitude = parkingspace.Coordinate.Point.Position.Latitude;
+            endLocation.Longitude = parkingspace.Coordinate.Point.Position.Longitude;
+            Geopoint endPoint = new Geopoint(endLocation);
 
 
             mapWithMyLocation.Center = startPosition.Coordinate.Point;
 
             MapIcon mapIconStart = new MapIcon();
-            //mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
-            //new Uri("ms-appx:///Assets/pin.png"));
             mapIconStart.NormalizedAnchorPoint = new Point(0.25, 0.9);
             mapIconStart.Location = startPosition.Coordinate.Point;
             mapIconStart.Title = "You are here";
             mapWithMyLocation.MapElements.Add(mapIconStart);
 
 
-            //MapIcon mapIconEnd = new MapIcon();
-            ////mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
-            ////new Uri("ms-appx:///Assets/pin.png"));
-            //mapIconEnd.NormalizedAnchorPoint = new Point(0.25, 0.9);
-            //mapIconEnd.Location = parkingspace.Coordinate.Point;
-            //mapIconEnd.Title = "Your parkingspace";
-            //mapWithMyLocation.MapElements.Add(mapIconEnd);
+            
             mapWithMyLocation.ZoomLevel = 12;
 
-           
+            
+            MapRouteFinderResult routeResult = await MapRouteFinder.GetWalkingRouteAsync(startPoint, endPoint);
 
 
+            if (routeResult.Status == MapRouteFinderStatus.Success)
+            {
+                // Use the route to initialize a MapRouteView.
+                MapRouteView viewOfRoute = new MapRouteView(routeResult.Route);
+                viewOfRoute.RouteColor = Colors.Blue;
+                viewOfRoute.OutlineColor = Colors.Blue;
+                // Add the new MapRouteView to the Routes collection
+                // of the MapControl.
+                mapWithMyLocation.Routes.Add(viewOfRoute);
+                // Fit the MapControl to the route.
+                await mapWithMyLocation.TrySetViewBoundsAsync(
+                  routeResult.Route.BoundingBox,
+                  null,
+                  Windows.UI.Xaml.Controls.Maps.MapAnimationKind.Bow);
+            }
 
-
-
-            //MapRouteFinderResult routeResult = await MapRouteFinder.GetWalkingRouteAsync(startPoint, endPoint);
-
-
-            //if (routeResult.Status == MapRouteFinderStatus.Success)
-            //{
-            //    // Use the route to initialize a MapRouteView.
-            //    MapRouteView viewOfRoute = new MapRouteView(routeResult.Route);
-            //    viewOfRoute.RouteColor = Colors.Blue;
-            //    viewOfRoute.OutlineColor = Colors.Blue;
-            //    // Add the new MapRouteView to the Routes collection
-            //    // of the MapControl.
-            //    mapWithMyLocation.Routes.Add(viewOfRoute);
-            //    // Fit the MapControl to the route.
-            //    await mapWithMyLocation.TrySetViewBoundsAsync(
-            //      routeResult.Route.BoundingBox,
-            //      null,
-            //      Windows.UI.Xaml.Controls.Maps.MapAnimationKind.Bow);
-            //}
-
-
-
-
-
-            //tbTurnByTurn.Inlines.Add(new Run()
-            //{
-            //    Text = "Total estimated time (minutes) = "
-            //    + routeResult.Route.EstimatedDuration.TotalMinutes.ToString("F1")
-            //});
-            //tbTurnByTurn.Inlines.Add(new LineBreak());
-            //tbTurnByTurn.Inlines.Add(new Run()
-            //{
-            //    Text = "Total length (kilometers) = "
-            //    + (routeResult.Route.LengthInMeters / 1000).ToString("F1")
-            //});
-            //tbTurnByTurn.Inlines.Add(new LineBreak());
-            //// Display the directions.
-            //tbTurnByTurn.Inlines.Add(new Run()
-            //{
-            //    Text = "DIRECTIONS"
-            //});
-            //tbTurnByTurn.Inlines.Add(new LineBreak());
-            //// Loop through the legs and maneuvers.
-            //int legCount = 0;
-            //foreach (MapRouteLeg leg in routeResult.Route.Legs)
-            //{
-            //    foreach (MapRouteManeuver maneuver in leg.Maneuvers)
-            //    {
-            //        tbTurnByTurn.Inlines.Add(new Run()
-            //        {
-            //            Text = maneuver.InstructionText
-            //        });
-            //        tbTurnByTurn.Inlines.Add(new LineBreak());
-            //    }
-            //}
+            
         }
+
+        //functie om parkingspace te clearen
 
         private void btnZoomIn_Click(object sender, RoutedEventArgs e)
         {
