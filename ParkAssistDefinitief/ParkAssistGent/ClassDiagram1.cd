@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ParkAssistGent.Classes.Geometry">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Geometry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParkAssistGent.Classes.Location">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParkAssistGent.Classes.PlacesResponse">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\PlacesResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParkAssistGent.Classes.PushPin">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\PushPin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParkAssistGent.Classes.Result">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAIAgAAAAAAgAAAAIAAEAAAAAQAAAAIAAgA=</HashCode>
+      <FileName>Classes\Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
